@@ -2,111 +2,100 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class AudioManager : MonoBehaviour
+namespace Gamified.Managers
 {
-    private static AudioManager instance;
-    public static AudioManager Instance
+    public class AudioManager : GenericSingleton<AudioManager>
     {
-        get
+        public List<Sound> sounds = new List<Sound>(); // Use List for dynamic resizing
+
+        private Dictionary<string, AudioClip> loadedClips = new Dictionary<string, AudioClip>();
+
+        protected override void Awake()
         {
-            if (instance == null)
+            base.Awake();
+
+            // Fill the sounds list with sound effect data
+            sounds.Add(new Sound { name = "GameOver", clipPath = "Sounds/GameOver" });
+            sounds.Add(new Sound { name = "Wrong", clipPath = "Sounds/Negative" });
+
+            // Load all audio clips asynchronously
+            StartCoroutine(LoadAllClips());
+        }
+
+        IEnumerator LoadAllClips()
+        {
+            foreach (Sound sound in sounds)
             {
-                instance = FindObjectOfType<AudioManager>();
-                if (instance == null)
+                ResourceRequest request = Resources.LoadAsync<AudioClip>(sound.clipPath);
+                yield return request;
+
+                if (request.asset != null)
                 {
-                    GameObject obj = new GameObject();
-                    obj.name = "AudioManager";
-                    instance = obj.AddComponent<AudioManager>();
+                    AudioClip clip = request.asset as AudioClip;
+                    loadedClips.Add(sound.name, clip);
+                }
+                else
+                {
+                    Debug.LogWarning("Failed to load AudioClip: " + sound.clipPath);
                 }
             }
-            return instance;
         }
-    }
 
-    public List<Sound> sounds = new List<Sound>(); // Use List for dynamic resizing
-
-    private Dictionary<string, AudioClip> loadedClips = new Dictionary<string, AudioClip>();
-
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
-
-        // Load all audio clips asynchronously
-        StartCoroutine(LoadAllClips());
-    }
-
-    IEnumerator LoadAllClips()
-    {
-        foreach (Sound sound in sounds)
+        public void PlaySound(string name)
         {
-            ResourceRequest request = Resources.LoadAsync<AudioClip>(sound.clipPath);
-            yield return request;
-
-            if (request.asset != null)
+            if (!loadedClips.ContainsKey(name))
             {
-                AudioClip clip = request.asset as AudioClip;
-                loadedClips.Add(sound.name, clip);
+                Debug.LogWarning("Sound: " + name + " not found!");
+                return;
             }
-            else
+
+            AudioSource.PlayClipAtPoint(loadedClips[name], Camera.main.transform.position);
+        }
+
+        // Unload unused audio clips (e.g., called during scene transitions)
+        public void UnloadUnusedClips()
+        {
+            List<string> keysToRemove = new List<string>();
+
+            foreach (var entry in loadedClips)
             {
-                Debug.LogWarning("Failed to load AudioClip: " + sound.clipPath);
+                if (!IsClipUsed(entry.Key))
+                {
+                    keysToRemove.Add(entry.Key);
+                }
             }
-        }
-    }
 
-    public void PlaySound(string name)
-    {
-        if (!loadedClips.ContainsKey(name))
-        {
-            Debug.LogWarning("Sound: " + name + " not found!");
-            return;
-        }
-
-        AudioSource.PlayClipAtPoint(loadedClips[name], Camera.main.transform.position);
-    }
-
-    // Unload unused audio clips (e.g., called during scene transitions)
-    public void UnloadUnusedClips()
-    {
-        List<string> keysToRemove = new List<string>();
-
-        foreach (var entry in loadedClips)
-        {
-            if (!IsClipUsed(entry.Key))
+            foreach (string key in keysToRemove)
             {
-                keysToRemove.Add(entry.Key);
+                Resources.UnloadAsset(loadedClips[key]);
+                loadedClips.Remove(key);
             }
         }
 
-        foreach (string key in keysToRemove)
+        // Check if a clip is currently being used
+        private bool IsClipUsed(string name)
         {
-            Resources.UnloadAsset(loadedClips[key]);
-            loadedClips.Remove(key);
+            foreach (Sound sound in sounds)
+            {
+                if (sound.name == name)
+                {
+                    // Implement your logic to determine if the sound is currently playing or needed
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
-    // Check if a clip is currently being used
-    private bool IsClipUsed(string name)
+    [System.Serializable]
+    public class Sound
     {
-        foreach (Sound sound in sounds)
-        {
-            if (sound.name == name)
-            {
-                // Implement your logic to determine if the sound is currently playing or needed
-                return true;
-            }
-        }
-        return false;
+        public string name;
+        public string clipPath; // Path to the AudioClip in Resources folder
+        [Range(0f, 1f)]
+        public float volume = 1f;
+        [Range(0.1f, 3f)]
+        public float pitch = 1f;
     }
 }
 
-[System.Serializable]
-public class Sound
-{
-    public string name;
-    public string clipPath; // Path to the AudioClip in Resources folder
-    [Range(0f, 1f)]
-    public float volume = 1f;
-    [Range(0.1f, 3f)]
-    public float pitch = 1f;
-}
