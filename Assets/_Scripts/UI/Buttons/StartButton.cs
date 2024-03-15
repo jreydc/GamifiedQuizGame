@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Gamified.UI;
+using Gamified.UI.Buttons;
 using Gamified.Managers;
 
 public class StartButton : ButtonBase
