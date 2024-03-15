@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Gamified.UI;
+using Gamified.UI.Buttons;
 
 public class AvatarButton : ButtonBase
 {
@@ -11,10 +11,14 @@ public class AvatarButton : ButtonBase
     protected override void Awake()
     {
         base.Awake();
+
     }
     protected override void OnClicked()
     {
         base.OnClicked();
+
+        Debug.Log(this.name);
+        AvatarManager.Instance.SetAvatarIMG(_avatar);
 
     }
 }
