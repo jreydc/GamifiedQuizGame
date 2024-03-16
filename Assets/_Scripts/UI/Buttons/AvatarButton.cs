@@ -9,11 +9,10 @@ public class AvatarButton : ButtonBase
     protected override void Awake()
     {
         _button = GetComponent<Button>();
-        
     }
     protected override void OnClicked()
     {
         Debug.Log(this.name);
-        //AvatarManager.Instance.SetAvatarIMG(_avatar);
+        AvatarManager.Instance.SetAvatarIMG(_avatar);
     }
 }
