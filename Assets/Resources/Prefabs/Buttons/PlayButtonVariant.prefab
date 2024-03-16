@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7552897586688131010, guid: 09a2fa4b3a94c3847a1bb073cd6db64e, type: 3}
       propertyPath: m_Name
-      value: PlayButton Variant
+      value: PlayButtonVariant
       objectReference: {fileID: 0}
     - target: {fileID: 7552897586688131021, guid: 09a2fa4b3a94c3847a1bb073cd6db64e, type: 3}
       propertyPath: m_Pivot.x
@@ -105,3 +105,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09a2fa4b3a94c3847a1bb073cd6db64e, type: 3}
+--- !u!1 &643103221373294834 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7552897586688131010, guid: 09a2fa4b3a94c3847a1bb073cd6db64e, type: 3}
+  m_PrefabInstance: {fileID: 6934851483174053680}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3686150289104458119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643103221373294834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ff5ef0e75c79bd45a4d561ea96d4be2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 0}
+  _buttonLabel: {fileID: 0}
