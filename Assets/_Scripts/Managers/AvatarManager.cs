@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class AvatarManager : GenericSingleton<AvatarManager>
 {
-    [SerializeField] private Texture2D _avatarIMGDisplay;
+    [SerializeField] private RawImage _avatarIMGDisplay;
     private Avatar _avatar;
     public void SetAvatarIMG(Avatar avatar)
     {
@@ -14,6 +14,6 @@ public class AvatarManager : GenericSingleton<AvatarManager>
 
     public void Display()
     {
-        _avatarIMGDisplay = _avatar.AvatarIMG;
+        _avatarIMGDisplay.texture = _avatar.AvatarIMG;
     }
 }

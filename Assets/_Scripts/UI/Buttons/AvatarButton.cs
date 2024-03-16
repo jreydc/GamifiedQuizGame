@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Gamified.UI.Buttons;
@@ -7,18 +5,15 @@ using Gamified.UI.Buttons;
 public class AvatarButton : ButtonBase
 {
     [SerializeField] private Avatar _avatar;
-
+    [SerializeField] private string buttonName => this.name;
     protected override void Awake()
     {
-        base.Awake();
-
+        _button = GetComponent<Button>();
+        
     }
     protected override void OnClicked()
     {
-        base.OnClicked();
-
         Debug.Log(this.name);
-        AvatarManager.Instance.SetAvatarIMG(_avatar);
-
+        //AvatarManager.Instance.SetAvatarIMG(_avatar);
     }
 }
