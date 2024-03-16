@@ -10,6 +10,7 @@ public class AvatarManager : GenericSingleton<AvatarManager>
     public void SetAvatarIMG(Avatar avatar)
     {
         _avatar = avatar;
+        Display();
     }
 
     public void Display()
