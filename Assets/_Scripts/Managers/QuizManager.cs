@@ -3,31 +3,50 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
+
 
 public class QuizManager : MonoBehaviour
 {
-    [SerializeField] private TMP_Text questionTextArea  ;
+    [SerializeField] private TMP_Text questionTextArea;
     [SerializeField] private TMP_Text timerCaption;
+    [SerializeField] private TMP_Text lifeCaption;
     [SerializeField] private Image timerProgressBar;
     
     [SerializeField] private List<Question> questions;
     [SerializeField] private List<GameObject> instantiatedChoiceButtons;
-    [SerializeField] private int duration;
 
     [SerializeField] private GameObject choiceButtonPrefab;
     [SerializeField] private RectTransform choiceSpawningPoint;
+    [SerializeField] private Sprite correctSprite;
+    [SerializeField] private Sprite wrongSprite;
+    [SerializeField] private Sprite normalSprite;
+
+    [SerializeField] private int duration;
+    [SerializeField] private int maxLife;
 
     private int currentQuestionIndex = 0;
     private int score = 0;
+    private int currentLifeCount;
     private float remainingDuration;
 
     private bool IsTimeRunning = true;
 
-    void Start()
+    private void Start()
     {
         PopulateQuestions();
         StartQuiz(duration, currentQuestionIndex);
+    }
+
+    private void OnEnable() => ChoiceButton.OnChoiceButtonClicked += AnswerSelected;
+
+    private void OnDisable() => ChoiceButton.OnChoiceButtonClicked -= AnswerSelected;
+
+    private void StartQuiz(int seconds, int questionIndex)
+    {
+        remainingDuration = seconds;
+        currentLifeCount = maxLife;
+        DisplayQuestionAndAnswers(questionIndex);
+        StartCoroutine(UpdateQuizTimer());
     }
 
     private void ChoiceButtonInitializer()
@@ -38,13 +57,6 @@ public class QuizManager : MonoBehaviour
             instantiatedButton.transform.SetParent(choiceSpawningPoint);
             instantiatedChoiceButtons.Add(instantiatedButton);
         }
-    }
-
-    private void StartQuiz(int seconds, int questionIndex)
-    {
-        remainingDuration = seconds;
-        DisplayQuestionAndAnswers(currentQuestionIndex);
-        StartCoroutine(UpdateQuizTimer());
     }
 
     private IEnumerator UpdateQuizTimer()
@@ -59,7 +71,7 @@ public class QuizManager : MonoBehaviour
                 yield return new WaitForSeconds(1f);
             }
         }
-        yield return new WaitForSeconds(5f);
+        //yield return new WaitForSeconds(5f);
         RestartTimer(duration);
         NextQuestion();
     }
@@ -92,6 +104,7 @@ public class QuizManager : MonoBehaviour
             new Answer() { answerText = "Madrid" }
         };
         _question1.correctAnswerIndex = 0;
+        _question1.correctAnswerText = "Paris";
         questions.Add(_question1);
 
         Question _question2 = new Question();
@@ -104,6 +117,7 @@ public class QuizManager : MonoBehaviour
             new Answer() { answerText = "Red" }
         };
         _question2.correctAnswerIndex = 1;
+        _question2.correctAnswerText = "Blue";
         questions.Add(_question2);
 
         Question _question3 = new Question();
@@ -116,20 +130,74 @@ public class QuizManager : MonoBehaviour
             new Answer() { answerText = "Africa" }
         };
         _question3.correctAnswerIndex = 3;
+        _question3.correctAnswerText = "Africa";
         questions.Add(_question3);
     }
 
-    public void AnswerSelected(int answerIndex, int questionIndex)
+    public void AnswerSelected(int answerIndex)
     {
-        if (answerIndex == questions[questionIndex].correctAnswerIndex)
+        if (answerIndex == questions[currentQuestionIndex].correctAnswerIndex)
         {
             score++;
         }
         Debug.Log("The score is: "+ score);
-        NextQuestion();
     }
 
-    
+    public void AnswerSelected(string answerText, Button selectedButton)
+    {
+        var correctAnswer = questions[currentQuestionIndex].correctAnswerText;
+        var selectedAnswerText = selectedButton.GetComponentInChildren<TMP_Text>();
+        bool IsCorrect = answerText.Equals(correctAnswer);
+        selectedButton.image.sprite = IsCorrect ? correctSprite : wrongSprite;
+
+        //if (IsCorrect) score++;
+
+        if (!IsCorrect)
+        {
+            currentLifeCount--;
+            lifeCaption.text = currentLifeCount.ToString();
+        }
+
+        Debug.Log("The score is: " + score);
+        EnableChoiceButtons(false);
+        ChangeChoiceButtonSprite(correctAnswer, selectedAnswerText.text);
+    }
+
+    public void EnableChoiceButtons(bool enabled)
+    {
+        foreach (var buttonOBJ in instantiatedChoiceButtons)
+        {
+            var button = buttonOBJ.GetComponent<Button>();
+            button.enabled = enabled;
+        }
+    }
+
+    public void ChangeChoiceButtonSprite(string correctAnswer, string selectedAnswer)
+    {
+        foreach (var buttonOBJ in instantiatedChoiceButtons)
+        {
+            var button = buttonOBJ.GetComponent<Button>();
+            var buttonLabel = button.GetComponentInChildren<TMP_Text>();
+            if (buttonLabel.text != correctAnswer && buttonLabel.text != selectedAnswer)
+            {
+                button.image.sprite = normalSprite;
+            }
+            if (buttonLabel.text == correctAnswer)
+            {
+                button.image.sprite = correctSprite;
+            }
+        }
+    }
+
+    public void RestartChoiceButtonSprite()
+    {
+        foreach (var buttonOBJ in instantiatedChoiceButtons)
+        {
+            var button = buttonOBJ.GetComponent<Button>();
+            button.image.sprite = normalSprite;            
+        }
+    }
+
     private void DisplayQuestionAndAnswers(int questionIndex)
     {
         questionTextArea.text = questions[questionIndex].questionText;
@@ -147,6 +215,8 @@ public class QuizManager : MonoBehaviour
         {
             DisplayQuestionAndAnswers(currentQuestionIndex);
             StartCoroutine(UpdateQuizTimer());
+            EnableChoiceButtons(true);
+            RestartChoiceButtonSprite();
         }
         else
         {

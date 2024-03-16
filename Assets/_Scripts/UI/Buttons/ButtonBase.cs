@@ -18,7 +18,7 @@ namespace Gamified.UI.Buttons
             );
         }
 
-        protected virtual void OnClicked() => Debug.Log(_buttonLabel.text + "was clicked");
+        protected virtual void OnClicked() => Debug.Log(_buttonLabel.text + " was clicked");
     }
 }
 
