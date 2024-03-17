@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: AvatarGrandFather
   m_EditorClassIdentifier: 
   AvatarID: 2
-  AvatarName: Avatar_GrandFather
+  AvatarName: AvatarGrandFather
   AvatarIMG: {fileID: 21300000, guid: 96fa0b69bf2add9428f0f56119713eee, type: 3}
   AvatarPrefab: {fileID: 0}

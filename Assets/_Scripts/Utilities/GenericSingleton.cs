@@ -5,24 +5,23 @@ public class GenericSingleton<T> : MonoBehaviour where T: GenericSingleton<T>
     private static T _instance;
     public static T Instance
     {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<T>();
-                if (_instance == null)
-                {
-                    GameObject obj = new GameObject();
-                    obj.name = nameof(T);
-                    _instance = obj.AddComponent<T>();
-                }
-            }
-            return _instance;
-        }
+        get { return _instance; }
+        private set { }
     }
     protected virtual void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        if (_instance == null)
+        {
+            Debug.Log(typeof(T).ToString() + " is NULL.");
+            _instance = this as T;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            Debug.Log(typeof(T).ToString() + " has tried to instantiate again!");
+        }
+
     }
 
     protected virtual void OnApplicationQuit()
