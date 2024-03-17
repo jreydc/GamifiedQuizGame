@@ -9,6 +9,6 @@ public class StartButton : ButtonBase
     protected override void OnClicked()
     {
         base.OnClicked();
-        GameManager.Instance.ChangeState(GameState.Starting);
+        GameManager.Instance.LoadLevel(SceneNames.AVATAR);
     }
 }
