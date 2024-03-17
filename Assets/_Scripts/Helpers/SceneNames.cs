@@ -5,6 +5,7 @@
         public const string MAINMENU = "MainMenu";
         public const string AVATAR = "AvatarScene";
         public const string IN_GAME = "InGame";
+        public const string END_GAME = "EndGame";
     }
 }
 

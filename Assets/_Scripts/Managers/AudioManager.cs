@@ -17,6 +17,8 @@ namespace Gamified.Managers
             // Fill the sounds list with sound effect data
             sounds.Add(new Sound { name = "GameOver", clipPath = "Sounds/GameOver" });
             sounds.Add(new Sound { name = "Wrong", clipPath = "Sounds/Negative" });
+            sounds.Add(new Sound { name = "ButtonClicked", clipPath = "Sounds/ButtonClicked" });
+            sounds.Add(new Sound { name = "Intro", clipPath = "Sounds/Intro" });
 
             // Load all audio clips asynchronously
             StartCoroutine(LoadAllClips());

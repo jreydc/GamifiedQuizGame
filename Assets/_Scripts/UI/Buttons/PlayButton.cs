@@ -5,6 +5,9 @@ public class PlayButton : ButtonBase
 {
     protected override void OnClicked()
     {
-        GameManager.Instance.ChangeState(GameState.InGame);
+        AudioManager.Instance.PlaySound(SoundNames.BUTTON);
+        LevelManager.Instance.PreInitPlayerName();
+        LevelManager.Instance.PreInitAvatar(AvatarManager.Instance.Avatar);
+        GameManager.Instance.LoadLevel(SceneNames.IN_GAME);
     }
 }

@@ -18,7 +18,7 @@ public class AvatarButton : ButtonBase
     protected override void OnClicked()
     {
         Debug.Log(name);
-        _avatarManager.Init(_avatar, name);
+        _avatarManager.Init(_avatar);
         _avatarManager.Display();
     }
 }

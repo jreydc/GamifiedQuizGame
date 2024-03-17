@@ -1,18 +1,40 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class LevelManager : MonoBehaviour
+public class LevelManager : GenericSingleton<LevelManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private TMP_InputField nickName;
+    private string playerNickName;
+    private Player _player;
+
+    public Player Player { get => _player; }
+
+    private void Start()
     {
-        
+        nickName = nickName.GetComponent<TMP_InputField>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PreInitPlayerName()
+    {
+        _player = new Player();
+        playerNickName = nickName.text;
+        if (nickName != null)
+        {
+            _player.PlayerNickName = playerNickName;
+        }
+        else
+        {
+            Debug.LogError("nickName is not assigned!");
+        }
+    }
+    public void PreInitAvatar(Avatar playerAvatar)
     {
         
+        _player.PlayerAvatar = playerAvatar;
+    }
+
+    public void SetAvatarFromAvatarMNGR()
+    {
+
     }
 }
