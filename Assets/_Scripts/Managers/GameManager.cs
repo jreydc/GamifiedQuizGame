@@ -55,6 +55,7 @@ namespace Gamified.Managers
 
         private void HandlePreStarting()
         {
+            AudioManager.Instance.PlaySound(SoundNames.INTRO);
             // Do some start setup, could be environment, cinematics etc
             // Eventually call ChangeState again with your next state
             //LoadLevel(SceneNames.MAINMENU);

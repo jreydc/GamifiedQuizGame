@@ -5,18 +5,21 @@ using UnityEngine.UI;
 
 namespace Gamified.Managers
 {
-    public class AvatarManager : MonoBehaviour
+    public class AvatarManager : GenericSingleton<AvatarManager>
     {
         [SerializeField] private Image _avatarIMGDisplay;
         [SerializeField] private Avatar _defaultAvatar;
-        public static Avatar _avatar;
+        public Avatar _avatar;
 
-        private void Awake()
+        public Avatar Avatar { get => _avatar; }
+
+        protected override void Awake()
         {
+            base.Awake();
             _avatar = _defaultAvatar;
         }
 
-        public void Init(Avatar avatar, string avatarName)
+        public void Init(Avatar avatar)
         {
             _avatar = avatar;
         }

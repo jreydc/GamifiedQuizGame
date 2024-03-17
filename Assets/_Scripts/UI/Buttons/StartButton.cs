@@ -9,6 +9,8 @@ public class StartButton : ButtonBase
     protected override void OnClicked()
     {
         base.OnClicked();
+        AudioManager.Instance.PlaySound(SoundNames.BUTTON);
         GameManager.Instance.LoadLevel(SceneNames.AVATAR);
+        
     }
 }

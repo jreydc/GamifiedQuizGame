@@ -4,238 +4,246 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-
-public class QuizManager : MonoBehaviour
+namespace Gamified.Managers
 {
-    [SerializeField] private TMP_Text questionTextArea;
-    [SerializeField] private TMP_Text timerCaption;
-    [SerializeField] private TMP_Text lifeCaption;
-    [SerializeField] private Image timerProgressBar;
-    
-    [SerializeField] private List<Question> questions;
-    [SerializeField] private List<GameObject> instantiatedChoiceButtons;
-
-    [SerializeField] private GameObject choiceButtonPrefab;
-    [SerializeField] private RectTransform choiceSpawningPoint;
-    [SerializeField] private Sprite correctSprite;
-    [SerializeField] private Sprite wrongSprite;
-    [SerializeField] private Sprite normalSprite;
-
-    [SerializeField] private int duration;
-    [SerializeField] private int maxLife;
-
-    private int currentQuestionIndex = 0;
-    private int score = 0;
-    private int currentLifeCount;
-    private float remainingDuration;
-
-    private bool IsTimeRunning = true;
-
-    private void Start()
+    public class QuizManager : MonoBehaviour
     {
-        PopulateQuestions();
-        StartQuiz(duration, currentQuestionIndex);
-    }
+        [SerializeField] private TMP_Text questionTextArea;
+        [SerializeField] private TMP_Text timerCaption;
+        [SerializeField] private TMP_Text lifeCaption;
+        [SerializeField] private Image timerProgressBar;
 
-    private void OnEnable() => ChoiceButton.OnChoiceButtonClicked += AnswerSelected;
+        [SerializeField] private List<Question> questions;
+        [SerializeField] private List<GameObject> instantiatedChoiceButtons;
 
-    private void OnDisable() => ChoiceButton.OnChoiceButtonClicked -= AnswerSelected;
+        [SerializeField] private GameObject choiceButtonPrefab;
+        [SerializeField] private RectTransform choiceSpawningPoint;
+        [SerializeField] private Sprite correctSprite;
+        [SerializeField] private Sprite wrongSprite;
+        [SerializeField] private Sprite normalSprite;
 
-    private void StartQuiz(int seconds, int questionIndex)
-    {
-        remainingDuration = seconds;
-        currentLifeCount = maxLife;
-        DisplayQuestionAndAnswers(questionIndex);
-        StartCoroutine(UpdateQuizTimer());
-    }
+        [SerializeField] private int duration;
+        [SerializeField] private int maxLife;
 
-    private void ChoiceButtonInitializer()
-    {
-        for (int i = 0; i < questions[currentQuestionIndex].answers.Count; i++)
+        private int currentQuestionIndex = 0;
+        private int score = 0;
+        private int currentLifeCount;
+        private float remainingDuration;
+
+        private bool IsTimeRunning = true;
+
+        private void Start()
         {
-            var instantiatedButton = Instantiate(choiceButtonPrefab, choiceSpawningPoint);
-            instantiatedButton.transform.SetParent(choiceSpawningPoint);
-            instantiatedChoiceButtons.Add(instantiatedButton);
+            PopulateQuestions();
+            StartQuiz(duration, currentQuestionIndex);
         }
-    }
 
-    private IEnumerator UpdateQuizTimer()
-    {
-        while (remainingDuration >= 0)
+        private void OnEnable() => ChoiceButton.OnChoiceButtonClicked += AnswerSelected;
+
+        private void OnDisable() => ChoiceButton.OnChoiceButtonClicked -= AnswerSelected;
+
+        private void StartQuiz(int seconds, int questionIndex)
         {
-            if (IsTimeRunning)
+            remainingDuration = seconds;
+            currentLifeCount = maxLife;
+            DisplayQuestionAndAnswers(questionIndex);
+            StartCoroutine(UpdateQuizTimer());
+        }
+
+        private void ChoiceButtonInitializer()
+        {
+            for (int i = 0; i < questions[currentQuestionIndex].answers.Count; i++)
             {
-                DisplayTimer(remainingDuration);
-                timerProgressBar.fillAmount = Mathf.InverseLerp(0, duration, remainingDuration);
-                remainingDuration--;
-                yield return new WaitForSeconds(1f);
+                var instantiatedButton = Instantiate(choiceButtonPrefab, choiceSpawningPoint);
+                instantiatedButton.transform.SetParent(choiceSpawningPoint);
+                instantiatedChoiceButtons.Add(instantiatedButton);
             }
         }
-        //yield return new WaitForSeconds(5f);
-        RestartTimer(duration);
-        NextQuestion();
-    }
 
-    private void RestartTimer(int time)
-    {
-        remainingDuration = time;
-        DisplayTimer(remainingDuration);
-        timerProgressBar.fillAmount = 1f;
-    }
+        private IEnumerator UpdateQuizTimer()
+        {
+            while (remainingDuration >= 0)
+            {
+                if (IsTimeRunning)
+                {
+                    DisplayTimer(remainingDuration);
+                    timerProgressBar.fillAmount = Mathf.InverseLerp(0, duration, remainingDuration);
+                    remainingDuration--;
+                    yield return new WaitForSeconds(1f);
+                }
+            }
+            //yield return new WaitForSeconds(5f);
+            RestartTimer(duration);
+            NextQuestion();
+        }
 
-    private void DisplayTimer(float timeRemaining)
-    {
-        timerCaption.text = ((int)timeRemaining).ToString();
-        TimerProgressBarColor(timerProgressBar, timerProgressBar.fillAmount);
-    }
+        private void RestartTimer(int time)
+        {
+            remainingDuration = time;
+            DisplayTimer(remainingDuration);
+            timerProgressBar.fillAmount = 1f;
+        }
 
-    // Define questions and answers programmatically
-    private void PopulateQuestions()
-    {
-        questions = new List<Question>();
+        private void DisplayTimer(float timeRemaining)
+        {
+            timerCaption.text = ((int)timeRemaining).ToString();
+            TimerProgressBarColor(timerProgressBar, timerProgressBar.fillAmount);
+        }
 
-        Question _question1 = new Question();
-        _question1.questionText = "What is the capital of France?";
-        _question1.answers = new List<Answer>
+        // Define questions and answers programmatically
+        private void PopulateQuestions()
+        {
+            questions = new List<Question>();
+
+            Question _question1 = new Question();
+            _question1.questionText = "What is the capital of France?";
+            _question1.answers = new List<Answer>
         {
             new Answer() { answerText = "Paris" },
             new Answer() { answerText = "London" },
             new Answer() { answerText = "Berlin" },
             new Answer() { answerText = "Madrid" }
         };
-        _question1.correctAnswerIndex = 0;
-        _question1.correctAnswerText = "Paris";
-        questions.Add(_question1);
+            _question1.correctAnswerIndex = 0;
+            _question1.correctAnswerText = "Paris";
+            questions.Add(_question1);
 
-        Question _question2 = new Question();
-        _question2.questionText = "What color is the letter G in Google's multicolored logo?";
-        _question2.answers = new List<Answer>
+            Question _question2 = new Question();
+            _question2.questionText = "What color is the letter G in Google's multicolored logo?";
+            _question2.answers = new List<Answer>
         {
             new Answer() { answerText = "Yellow" },
             new Answer() { answerText = "Blue" },
             new Answer() { answerText = "Green" },
             new Answer() { answerText = "Red" }
         };
-        _question2.correctAnswerIndex = 1;
-        _question2.correctAnswerText = "Blue";
-        questions.Add(_question2);
+            _question2.correctAnswerIndex = 1;
+            _question2.correctAnswerText = "Blue";
+            questions.Add(_question2);
 
-        Question _question3 = new Question();
-        _question3.questionText = "Which continent is Kenya located on?";
-        _question3.answers = new List<Answer>
+            Question _question3 = new Question();
+            _question3.questionText = "Which continent is Kenya located on?";
+            _question3.answers = new List<Answer>
         {
             new Answer() { answerText = "Asia" },
             new Answer() { answerText = "Europe" },
             new Answer() { answerText = "North America" },
             new Answer() { answerText = "Africa" }
         };
-        _question3.correctAnswerIndex = 3;
-        _question3.correctAnswerText = "Africa";
-        questions.Add(_question3);
-    }
-
-    public void AnswerSelected(int answerIndex)
-    {
-        if (answerIndex == questions[currentQuestionIndex].correctAnswerIndex)
-        {
-            score++;
-        }
-        Debug.Log("The score is: "+ score);
-    }
-
-    public void AnswerSelected(string answerText, Button selectedButton)
-    {
-        var correctAnswer = questions[currentQuestionIndex].correctAnswerText;
-        var selectedAnswerText = selectedButton.GetComponentInChildren<TMP_Text>();
-        bool IsCorrect = answerText.Equals(correctAnswer);
-        selectedButton.image.sprite = IsCorrect ? correctSprite : wrongSprite;
-
-        //if (IsCorrect) score++;
-
-        if (!IsCorrect)
-        {
-            currentLifeCount--;
-            lifeCaption.text = currentLifeCount.ToString();
+            _question3.correctAnswerIndex = 3;
+            _question3.correctAnswerText = "Africa";
+            questions.Add(_question3);
         }
 
-        Debug.Log("The score is: " + score);
-        EnableChoiceButtons(false);
-        ChangeChoiceButtonSprite(correctAnswer, selectedAnswerText.text);
-    }
-
-    public void EnableChoiceButtons(bool enabled)
-    {
-        foreach (var buttonOBJ in instantiatedChoiceButtons)
+        public void AnswerSelected(int answerIndex)
         {
-            var button = buttonOBJ.GetComponent<Button>();
-            button.enabled = enabled;
-        }
-    }
-
-    public void ChangeChoiceButtonSprite(string correctAnswer, string selectedAnswer)
-    {
-        foreach (var buttonOBJ in instantiatedChoiceButtons)
-        {
-            var button = buttonOBJ.GetComponent<Button>();
-            var buttonLabel = button.GetComponentInChildren<TMP_Text>();
-            if (buttonLabel.text != correctAnswer && buttonLabel.text != selectedAnswer)
+            if (answerIndex == questions[currentQuestionIndex].correctAnswerIndex)
             {
+                score++;
+            }
+            Debug.Log("The score is: " + score);
+        }
+
+        public void AnswerSelected(string answerText, Button selectedButton)
+        {
+            var correctAnswer = questions[currentQuestionIndex].correctAnswerText;
+            var selectedAnswerText = selectedButton.GetComponentInChildren<TMP_Text>();
+            bool IsCorrect = answerText.Equals(correctAnswer);
+            selectedButton.image.sprite = IsCorrect ? correctSprite : wrongSprite;
+
+            if (IsCorrect)
+            {
+                AudioManager.Instance.PlaySound(SoundNames.CORRECT);
+                score++;
+            }
+
+            if (!IsCorrect)
+            {
+                AudioManager.Instance.PlaySound(SoundNames.WRONG);
+                currentLifeCount--;
+                lifeCaption.text = currentLifeCount.ToString();
+            }
+
+            Debug.Log("The score is: " + score);
+            EnableChoiceButtons(false);
+            ChangeChoiceButtonSprite(correctAnswer, selectedAnswerText.text);
+        }
+
+        public void EnableChoiceButtons(bool enabled)
+        {
+            foreach (var buttonOBJ in instantiatedChoiceButtons)
+            {
+                var button = buttonOBJ.GetComponent<Button>();
+                button.enabled = enabled;
+            }
+        }
+
+        public void ChangeChoiceButtonSprite(string correctAnswer, string selectedAnswer)
+        {
+            foreach (var buttonOBJ in instantiatedChoiceButtons)
+            {
+                var button = buttonOBJ.GetComponent<Button>();
+                var buttonLabel = button.GetComponentInChildren<TMP_Text>();
+                if (buttonLabel.text != correctAnswer && buttonLabel.text != selectedAnswer)
+                {
+                    button.image.sprite = normalSprite;
+                }
+                if (buttonLabel.text == correctAnswer)
+                {
+                    button.image.sprite = correctSprite;
+                }
+            }
+        }
+
+        public void RestartChoiceButtonSprite()
+        {
+            foreach (var buttonOBJ in instantiatedChoiceButtons)
+            {
+                var button = buttonOBJ.GetComponent<Button>();
                 button.image.sprite = normalSprite;
             }
-            if (buttonLabel.text == correctAnswer)
+        }
+
+        private void DisplayQuestionAndAnswers(int questionIndex)
+        {
+            questionTextArea.text = questions[questionIndex].questionText;
+            for (int i = 0; i < questions[questionIndex].answers.Count; i++)
             {
-                button.image.sprite = correctSprite;
+                var choiceButtonLabel = instantiatedChoiceButtons[i].GetComponentInChildren<TMP_Text>();
+                choiceButtonLabel.text = questions[questionIndex].answers[i].answerText;
             }
         }
-    }
 
-    public void RestartChoiceButtonSprite()
-    {
-        foreach (var buttonOBJ in instantiatedChoiceButtons)
+        private void NextQuestion()
         {
-            var button = buttonOBJ.GetComponent<Button>();
-            button.image.sprite = normalSprite;            
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.Count)
+            {
+                DisplayQuestionAndAnswers(currentQuestionIndex);
+                StartCoroutine(UpdateQuizTimer());
+                EnableChoiceButtons(true);
+                RestartChoiceButtonSprite();
+            }
+            else
+            {
+                EndQuiz();
+            }
+            Debug.Log("Current Question Index: " + currentQuestionIndex);
         }
-    }
 
-    private void DisplayQuestionAndAnswers(int questionIndex)
-    {
-        questionTextArea.text = questions[questionIndex].questionText;
-        for (int i = 0; i < questions[questionIndex].answers.Count; i++)
+        private void EndQuiz()
         {
-            var choiceButtonLabel = instantiatedChoiceButtons[i].GetComponentInChildren<TMP_Text>();
-            choiceButtonLabel.text = questions[questionIndex].answers[i].answerText;
+            // Display final score and end of quiz message
+            GameManager.Instance.LoadLevel(SceneNames.END_GAME);
+            AudioManager.Instance.PlaySound(SoundNames.GAMEOVER);
+            Debug.Log("End of the Quiz");
         }
-    }
 
-    private void NextQuestion()
-    {
-        currentQuestionIndex++;
-        if (currentQuestionIndex < questions.Count)
+        private void OnTimerStarted(float moveTime)
         {
-            DisplayQuestionAndAnswers(currentQuestionIndex);
-            StartCoroutine(UpdateQuizTimer());
-            EnableChoiceButtons(true);
-            RestartChoiceButtonSprite();
-        }
-        else
-        {
-            EndQuiz();
-        }
-        Debug.Log("Current Question Index: "+currentQuestionIndex);
-    }
-
-    private void EndQuiz()
-    {
-        // Display final score and end of quiz message
-        Debug.Log("End of the Quiz");
-    }
-
-    private void OnTimerStarted(float moveTime)
-    {
-        bool outOfTimeSoundPlayed = false;
-        bool playerTurnSoundPlayed = false;
-        //TimerProgressBarColor(timerProgressBar, timerProgressBar.fillAmount);
+            bool outOfTimeSoundPlayed = false;
+            bool playerTurnSoundPlayed = false;
+            //TimerProgressBarColor(timerProgressBar, timerProgressBar.fillAmount);
 
             //if (_tablesController.GetCurrentUserGUID() == _player.PlayerData.GUID)
             //{
@@ -252,22 +260,25 @@ public class QuizManager : MonoBehaviour
             //        outOfTimeSoundPlayed = true;
             //    }
             //}
-    }
+        }
 
-    private void TimerProgressBarColor(Image progressBar, float fillProgress)
-    {
-        Color colorA = ColorUtility.TryParseHtmlString("#45BE26", out Color parsedColorA) ? parsedColorA : Color.white;
-        Color colorB = ColorUtility.TryParseHtmlString("#B9AB2F", out Color parsedColorB) ? parsedColorB : Color.white;
-        Color colorC = ColorUtility.TryParseHtmlString("#FFA500", out Color parsedColorC) ? parsedColorC : Color.white;
-        Color colorD = ColorUtility.TryParseHtmlString("#FF0000", out Color parsedColorD) ? parsedColorD : Color.white;
+        private void TimerProgressBarColor(Image progressBar, float fillProgress)
+        {
+            Color colorA = ColorUtility.TryParseHtmlString("#45BE26", out Color parsedColorA) ? parsedColorA : Color.white;
+            Color colorB = ColorUtility.TryParseHtmlString("#B9AB2F", out Color parsedColorB) ? parsedColorB : Color.white;
+            Color colorC = ColorUtility.TryParseHtmlString("#FFA500", out Color parsedColorC) ? parsedColorC : Color.white;
+            Color colorD = ColorUtility.TryParseHtmlString("#FF0000", out Color parsedColorD) ? parsedColorD : Color.white;
 
-        if (fillProgress <= 0.25f)
-            progressBar.color = colorD;
-        else if (fillProgress <= 0.5f)
-            progressBar.color = Color.Lerp(colorD, colorC, (fillProgress - 0.25f) / 0.25f);
-        else if (fillProgress <= 0.75f)
-            progressBar.color = Color.Lerp(colorC, colorB, (fillProgress - 0.5f) / 0.25f);
-        else
-            progressBar.color = Color.Lerp(colorB, colorA, (fillProgress - 0.75f) / 0.25f);
+            if (fillProgress <= 0.25f)
+                progressBar.color = colorD;
+            else if (fillProgress <= 0.5f)
+                progressBar.color = Color.Lerp(colorD, colorC, (fillProgress - 0.25f) / 0.25f);
+            else if (fillProgress <= 0.75f)
+                progressBar.color = Color.Lerp(colorC, colorB, (fillProgress - 0.5f) / 0.25f);
+            else
+                progressBar.color = Color.Lerp(colorB, colorA, (fillProgress - 0.75f) / 0.25f);
+        }
     }
 }
+
+
