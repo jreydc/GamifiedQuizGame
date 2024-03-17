@@ -307,8 +307,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 50
-    m_Right: 50
+    m_Left: 75
+    m_Right: 75
     m_Top: 150
     m_Bottom: 0
   m_ChildAlignment: 1
@@ -1103,6 +1103,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 351107010}
     m_Modifications:
+    - target: {fileID: 467632499640599564, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 467632499640599564, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 467632499640599564, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1855841027}
+    - target: {fileID: 467632499640599564, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetAvatarIMG
+      objectReference: {fileID: 0}
+    - target: {fileID: 467632499640599564, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Gamified.Managers.AvatarManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 467632499640599564, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: fa755e66f05d7ad4189e3315d79bdee0, type: 2}
+    - target: {fileID: 467632499640599564, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Avatar, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1172595876835635532, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: _avatar
+      value: 
+      objectReference: {fileID: 11400000, guid: fa755e66f05d7ad4189e3315d79bdee0, type: 2}
+    - target: {fileID: 1172595876835635532, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: _avatarDisplay
+      value: 
+      objectReference: {fileID: 768016050}
+    - target: {fileID: 1172595876835635532, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
+      propertyPath: _avatarManager
+      value: 
+      objectReference: {fileID: 1855841027}
     - target: {fileID: 5730660571502760211, guid: d3ac02c38bd28d342a6b3d1394c0ab97, type: 3}
       propertyPath: m_Name
       value: AvatarMan
@@ -1233,8 +1273,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -20, y: -20}
+  m_AnchoredPosition: {x: 0, y: -20}
+  m_SizeDelta: {x: -20, y: -60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &768016049
 CanvasRenderer:
@@ -1253,7 +1293,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 768016046}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1264,13 +1304,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 0a3493fd6e5278b4aa401dd562f901b1, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+  m_Sprite: {fileID: 21300000, guid: 0a3493fd6e5278b4aa401dd562f901b1, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &895921744
 GameObject:
   m_ObjectHideFlags: 0
@@ -1688,6 +1731,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 351107010}
     m_Modifications:
+    - target: {fileID: 2947956464948341333, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947956464948341333, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947956464948341333, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1855841027}
+    - target: {fileID: 2947956464948341333, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947956464948341333, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetAvatarIMG
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947956464948341333, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Gamified.Managers.AvatarManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2947956464948341333, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: da94357b87e33e44ea289b914b85522a, type: 2}
+    - target: {fileID: 2947956464948341333, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Avatar, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4526546651668438805, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: _avatarDisplay
+      value: 
+      objectReference: {fileID: 768016050}
+    - target: {fileID: 4526546651668438805, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
+      propertyPath: _avatarManager
+      value: 
+      objectReference: {fileID: 1855841027}
     - target: {fileID: 6994942221431357253, guid: 3efb022ec487c0543adc000fd4cd39f5, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1790,6 +1873,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 351107010}
     m_Modifications:
+    - target: {fileID: 3065996867417824641, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: _avatar
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e67e117a24b39049a4498c82919223e, type: 2}
+    - target: {fileID: 3065996867417824641, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: _avatarDisplay
+      value: 
+      objectReference: {fileID: 768016050}
+    - target: {fileID: 3065996867417824641, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: _avatarManager
+      value: 
+      objectReference: {fileID: 1855841027}
+    - target: {fileID: 4374159703828588737, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4374159703828588737, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4374159703828588737, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1855841027}
+    - target: {fileID: 4374159703828588737, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetAvatarIMG
+      objectReference: {fileID: 0}
+    - target: {fileID: 4374159703828588737, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Gamified.Managers.AvatarManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4374159703828588737, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 11400000, guid: 8e67e117a24b39049a4498c82919223e, type: 2}
+    - target: {fileID: 4374159703828588737, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: Avatar, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 8452723485599612369, guid: 7e5f9ee1f324a2c469f74e8aa5d0e6bd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2176,6 +2299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _avatarIMGDisplay: {fileID: 768016050}
+  _defaultAvatar: {fileID: 11400000, guid: 8ae9193a87b4ac5459a9b0073ec40c75, type: 2}
 --- !u!4 &1855841028
 Transform:
   m_ObjectHideFlags: 0
@@ -2535,3 +2659,60 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2031433390}
   m_CullTransparentMesh: 1
+--- !u!1001 &2139885400
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715537, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1399287106328715538, guid: f2fd267adb589564f886deaee9555ec2, type: 3}
+      propertyPath: m_Name
+      value: GameManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f2fd267adb589564f886deaee9555ec2, type: 3}

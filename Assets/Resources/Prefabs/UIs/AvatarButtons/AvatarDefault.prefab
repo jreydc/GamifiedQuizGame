@@ -99,6 +99,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7595170582832754533, guid: 8fde3f3b585013947a327b9d9d710f07, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7595170582832754539, guid: 8fde3f3b585013947a327b9d9d710f07, type: 3}
       propertyPath: m_Name
       value: AvatarDefault

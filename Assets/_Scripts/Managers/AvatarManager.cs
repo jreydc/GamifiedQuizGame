@@ -3,18 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AvatarManager : GenericSingleton<AvatarManager>
+namespace Gamified.Managers
 {
-    [SerializeField] private RawImage _avatarIMGDisplay;
-    private Avatar _avatar;
-    public void SetAvatarIMG(Avatar avatar)
+    public class AvatarManager : MonoBehaviour
     {
-        _avatar = avatar;
-        Display();
-    }
+        [SerializeField] private Image _avatarIMGDisplay;
+        [SerializeField] private Avatar _defaultAvatar;
+        public static Avatar _avatar;
 
-    public void Display()
-    {
-        _avatarIMGDisplay.texture = _avatar.AvatarIMG;
+        private void Awake()
+        {
+            _avatar = _defaultAvatar;
+        }
+
+        public void Init(Avatar avatar, string avatarName)
+        {
+            _avatar = avatar;
+        }
+
+        public void Display()
+        {
+            _avatarIMGDisplay.sprite = _avatar.AvatarIMG;
+        }
     }
 }
+

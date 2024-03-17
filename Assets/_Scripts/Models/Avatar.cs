@@ -6,6 +6,6 @@ public class Avatar : ScriptableObject
 {
     public int AvatarID;
     public string AvatarName;
-    public Texture2D AvatarIMG;
+    public Sprite AvatarIMG;
     public GameObject AvatarPrefab;
 }
