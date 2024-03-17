@@ -57,7 +57,7 @@ namespace Gamified.Managers
         {
             // Do some start setup, could be environment, cinematics etc
             // Eventually call ChangeState again with your next state
-
+            //LoadLevel(SceneNames.MAINMENU);
             //ChangeState(GameState.Starting);
         }
 
@@ -89,14 +89,14 @@ namespace Gamified.Managers
         }
 
         #region Scene Management
-        public void Loading(string levelName) => StartCoroutine(LoadingDetails(levelName)); //this should be called to start the Coroutine of the SceneManagement
-        public void UnLoading(string levelName) => StartCoroutine(UnLoadingDetails(levelName));//this should be called to unload scene.
-        IEnumerator LoadingDetails(string levelName)
+        public void Loading(string levelName) => StartCoroutine(LoadingDetails()); //this should be called to start the Coroutine of the SceneManagement
+        public void UnLoading(string levelName) => StartCoroutine(UnLoadingDetails());//this should be called to unload scene.
+        IEnumerator LoadingDetails()
         {
             yield return null;
 
             //Begin to load the Scene you specify
-            LoadLevel(levelName);
+            LoadLevel(GetActiveSceneIndex());
             //Don't let the Scene activate until you allow it to
             _asyncOperation.allowSceneActivation = false;
             Debug.Log("Pro :" + _asyncOperation.progress);
@@ -124,12 +124,12 @@ namespace Gamified.Managers
             }
         }
 
-        IEnumerator UnLoadingDetails(string levelName)
+        IEnumerator UnLoadingDetails()
         {
             yield return null;
 
             //Begin to Unload the Scene you specify
-            UnLoadLevel(levelName);
+            UnLoadLevel(GetActiveSceneIndex());
             //Don't let the Scene activate until you allow it to
             _asyncOperation.allowSceneActivation = false;
             Debug.Log("Pro :" + _asyncOperation.progress);
@@ -155,7 +155,7 @@ namespace Gamified.Managers
         }
 
         public int GetActiveSceneIndex() => SceneManager.GetActiveScene().buildIndex; 
-        public void LoadLevel(string levelName) => _asyncOperation = SceneManager.LoadSceneAsync(levelName, LoadSceneMode.Single);
+        public void LoadLevel(string levelName) => SceneManager.LoadScene(levelName, LoadSceneMode.Single);
         public void LoadLevel(int levelIndex) => _asyncOperation = SceneManager.LoadSceneAsync(levelIndex, LoadSceneMode.Single);
         public void UnLoadLevel(string levelName) => _asyncOperation = SceneManager.UnloadSceneAsync(levelName, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
         public void UnLoadLevel(int levelIndex) => _asyncOperation = SceneManager.UnloadSceneAsync(levelIndex, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
